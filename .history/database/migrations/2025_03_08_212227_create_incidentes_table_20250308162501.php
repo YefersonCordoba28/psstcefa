@@ -23,8 +23,8 @@ class CreateIncidentesTable extends Migration
         $table->string('creado_por');
         $table->timestamp('fecha_registro')->useCurrent();
         $table->timestamps();
-        });
     }
+        };
 
     /**
      * Reverse the migrations.
@@ -35,4 +35,3 @@ class CreateIncidentesTable extends Migration
     {
         Schema::dropIfExists('incidentes');
     }
-}

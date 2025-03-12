@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Controllers\Auth\view;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +31,7 @@ class RegisterAdminController extends Controller
             'role' => 'admin', // Se fuerza el rol
         ]);
 
-        return
+        return;
 
         return back()->with('success', 'admin registrado exitosamente.');
     }

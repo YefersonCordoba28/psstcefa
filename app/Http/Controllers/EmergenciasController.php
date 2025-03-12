@@ -15,7 +15,7 @@ class EmergenciasController extends Controller
     public function index()
     {
         $datos = Emergencia::all();
-        return view('', compact('datos'));
+        return view('welcome', compact('datos'));
     }
 
     /**

@@ -22,7 +22,7 @@ class CreateEventosTable extends Migration
         $table->text('descripción_evento');
         $table->text('personas_involucradas')->nullable();
         $table->text('testigos')->nullable();
-        $table->string('evidencias')->nullable(); er
+        $table->string('evidencias')->nullable(); 
         $table->string('creado_por');
         $table->timestamp('fecha_registro')->useCurrent();
         $table->timestamps();

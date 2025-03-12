@@ -18,7 +18,7 @@
             --primary-light: rgb(255, 255, 255);
             --accent: #f7931e;
             --bg-light: #f8f9fa;
-            --hero-bg: rgb(195, 195, 195);
+            --hero-bg: rgb(0, 128, 0);
         }
 
         body {
@@ -44,7 +44,7 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            background-color: rgb(248, 249, 250);
+            background-color: rgb(255, 255, 0);
             color: black;
             padding: 10px 0;
             text-align: center;
@@ -163,8 +163,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

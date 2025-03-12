@@ -13,7 +13,7 @@ class CreateIncidentesTable extends Migration
      */
     public function up()
     {
-       $table->id();
+    $table->id();
             $table->dateTime('fecha_hora');
             $table->string('ubicacion');
             $table->text('descripcion_incidente');
@@ -23,8 +23,8 @@ class CreateIncidentesTable extends Migration
             $table->string('creado_por');
             $table->timestamp('fecha_registro')->useCurrent();
             $table->timestamps();
-        });
     }
+        };
 
     /**
      * Reverse the migrations.
@@ -35,4 +35,4 @@ class CreateIncidentesTable extends Migration
     {
         Schema::dropIfExists('incidentes');
     }
-}
+
