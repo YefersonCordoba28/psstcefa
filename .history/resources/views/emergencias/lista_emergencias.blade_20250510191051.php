@@ -1,0 +1,1 @@
+/emergencias/lista_emergencias

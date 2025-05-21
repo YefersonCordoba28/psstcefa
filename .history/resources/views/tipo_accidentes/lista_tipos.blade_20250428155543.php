@@ -1,0 +1,207 @@
+@extends('layouts.master')
+
+@section('content')
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h1 class="m-0 text-center">Lista de Tipos de Accidentes</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title m-0">Tipos de Accidentes</h5>
+                            <div class="card-tools">
+                                <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#crear">
+                                    Registrar Nuevo
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered table-hover">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="text-center">ID</th>
+                                            <th class="text-center">Nombre del Tipo</th>
+                                            <th class="text-center">Editar</th>
+                                            <th class="text-center">Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($datos as $item)
+                                            <tr>
+                                                <td class="text-center align-middle">{{ $item->id }}</td>
+                                                <td class="align-middle">{{ $item->nombre }}</td>
+                                                <td class="text-center align-middle">
+                                                    <button class="btn btn-success btn-sm editbtn"
+                                                            data-id="{{ $item->id }}"
+                                                            data-nombre="{{ $item->nombre }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editar">
+                                                        Editar
+                                                    </button>
+                                                </td>
+                                                <td class="text-center align-middle">
+                                                    <button class="btn btn-danger btn-sm deletebtn"
+                                                            data-id="{{ $item->id }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#eliminar">
+                                                        Eliminar
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="text-center">No hay tipos de accidentes registrados.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Modal Crear --}}
+            <div class="modal fade" id="crear" tabindex="-1" aria-labelledby="crearLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <form action="{{ route('tipo_accidentes.store') }}" method="POST">
+                        @csrf
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="crearLabel">Registrar Tipo de Accidente</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre:</label>
+                                    <input type="text" name="nombre" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Modal Editar --}}
+            <div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <form id="formEditar" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editarLabel">Editar Tipo de Accidente</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="edit-nombre">Nombre:</label>
+                                    <input type="text" name="nombre" id="edit-nombre" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Modal Eliminar --}}
+            <div class="modal fade" id="eliminar" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <form id="formEliminar" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="eliminarLabel">Eliminar Tipo de Accidente</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Estás seguro de que deseas eliminar este tipo de accidente?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configuración para el modal de edición
+            document.querySelectorAll('.editbtn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    document.getElementById('formEditar').action = `/tipo_accidentes/${id}`;
+                    document.getElementById('edit-nombre').value = this.getAttribute('data-nombre');
+                });
+            });
+
+            // Configuración para el modal de eliminación
+            document.querySelectorAll('.deletebtn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    document.getElementById('formEliminar').action = `/tipo_accidentes/${id}`;
+                });
+            });
+        });
+    </script>
+
+    <style>
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+            .table th, .table td {
+                padding: 0.5rem;
+                white-space: nowrap;
+            }
+            .btn-sm {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
+            }
+            .card {
+                margin: 0 0.5rem;
+            }
+            .modal-dialog {
+                margin: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .table th, .table td {
+                font-size: 0.75rem;
+                padding: 0.3rem;
+            }
+            .btn-sm {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+            }
+            .modal-content {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+@endsection
